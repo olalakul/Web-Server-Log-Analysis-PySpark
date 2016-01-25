@@ -22,9 +22,12 @@ Out of 726739 log-lines, 723267 are parsed with protocol info, 1847 are parsed w
 The data are taken from [here](http://ita.ee.lbl.gov/html/contrib/Calgary-HTTP.html). The code assumes that the file "calgary_access_log.gz" is downloaded, gunziped and put into "data" subdirectory.
 
 
+![Number of requests with various response codes over time (interactive in notebook)](images/requests_responseCodes?raw=True)
+
 ![Percentage of requests with various response codes over time](images/output_42_1.png?raw=True)
 
-![Counting requests with a certain size of returned content](images/output_60_0.png)
+![Counting requests with a certain size of returned content (interactive in notebook)](images/requests_sizeDocument.png?raw=True)
 
-![Countint requests with a certain percentage of notFound-code](images/output_68_0.png)
+![Countint requests with a certain percentage of notFound-code (interactive in notebook)](images/requests_percentageNotFound.png?raw=True)
 
+On the very left of this histogram there are 8751 requests that never (strictly speaking, no more than 1% of the times each was requested) returned "notFound" status. Everything looks good for those. On the very right of this histogram there are 2920 requests that very always (stricty speaking, more than 99% of the times each of those was requested) not found. Those definitely require further investigation.
