@@ -22,7 +22,7 @@ Out of 726739 log-lines, 723267 are parsed with protocol info, 1847 are parsed w
 The data are taken from [here](http://ita.ee.lbl.gov/html/contrib/Calgary-HTTP.html). The code assumes that the file "calgary_access_log.gz" is downloaded, gunziped and put into "data" subdirectory.
 
 
-![Number of requests with various response codes over time (interactive in notebook)](images/requests_responseCodes?raw=True)
+![Number of requests with various response codes over time (interactive in notebook)](images/requests_responseCodes.png?raw=True)
 
 ![Percentage of requests with various response codes over time](images/output_42_1.png?raw=True)
 
