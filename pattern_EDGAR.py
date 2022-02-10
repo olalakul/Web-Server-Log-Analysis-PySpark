@@ -46,7 +46,8 @@ def parseApacheLogLine(logline):
     """
     match = re.search(pattern, logline)
     if match is None:   # failed match
-        logger.debug(f'parsing failed   {logline:s}')
+        # TODO: define new level HARD_DEBUG = 5 and use it here
+        #logger.debug(f'parsing failed   {logline:s}')
         return (logline, 0)
     
     size_field = match.group(9)
@@ -74,7 +75,7 @@ def parseApacheLogLine(logline):
         idx = bool(match.group(10)),
         browser = browser
     )
-    logger.debug(f'parsed   {logline:s}')
+    #logger.debug(f'parsed   {logline:s}')
     
     return (parsed_row, 1)
 

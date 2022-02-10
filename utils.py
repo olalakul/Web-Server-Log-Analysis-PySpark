@@ -7,6 +7,26 @@ logger = logging.getLogger(__name__)
 py4j_logger = logging.getLogger("py4j")
 py4j_logger.setLevel(logging.ERROR)
 
+import os
+
+    
+def file_path(string):
+    """ check if the path to the file"""
+    logger.debug(string)
+    if os.path.isfile(string):
+        return string
+    else:
+        raise FileNotFoundError(string)
+
+def dir_path(string):
+    """ check if the path to the file"""
+    logger.debug(string)
+    if os.path.isdir(string):
+        return string
+    else:
+        raise NotADirectoryError(string)    
+    
+
 
 def access_fail_logs(parsed_logs):
     """ Read and parse log file, print a 20-sample of failed log-lines
