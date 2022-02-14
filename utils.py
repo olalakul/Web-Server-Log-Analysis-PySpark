@@ -25,8 +25,20 @@ def dir_path(string):
         return string
     else:
         raise NotADirectoryError(string)    
-    
 
+def dir_or_new_path(string):
+    """ check if the path to the file"""
+    logger.debug(string)
+    if os.path.isdir(string):
+        return string
+    elif not os.path.exists(string):
+            os.makedirs(string)  
+    else:
+        raise NotADirectoryError(string)    
+
+
+    
+    
 
 def access_fail_logs(parsed_logs):
     """ Read and parse log file, print a 20-sample of failed log-lines
