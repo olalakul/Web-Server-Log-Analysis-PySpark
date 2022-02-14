@@ -25,6 +25,8 @@ def parse_arguments():
                         in the format "%Y%m%d", for example "20030209"')
     parser.add_argument("--data_directory", type=utils.dir_path, default='./data/',
                         help='directory to temporary store logging data')
+    parser.add_argument("--output_directory", type=utils.dir_path, default='./output/',
+                        help='directory to temporary store logging data')
     
     args = parser.parse_args()
     return args
@@ -72,7 +74,7 @@ def my_main():
         failedLogsRDD1.take(20)
         
     accessLogsRDD1.saveAsTextFile(
-        os.path.join(args.data_directory, f'parsed_log{args.dateoflogs:%Y%m%d}.csv'))
+        os.path.join(args.output_directory, f'parsed_log{args.dateoflogs:%Y%m%d}.csv'))
         
 
 
