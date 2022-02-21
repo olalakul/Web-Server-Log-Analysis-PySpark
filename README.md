@@ -1,36 +1,18 @@
 # Web-Server-Log-Analysis-with-PySpark
+This example demonstrates parsing (including incorrectly formated strings) and analysis of web server log data . 
 
-##### This example demonstrates parsing (including incorrectly formated strings) and analysis of web server log data . 
+### History 
+I started this project at 2015. That time, with Spark 1.4,  the RDD was the only structure to use. The main focus of the project was exploring the basic functionality of pypark and possibilities of exploratory analysis for distributed data.
+The data used in 2015 [http://ita.ee.lbl.gov/html/contrib/Calgary-HTTP.html](http://ita.ee.lbl.gov/html/contrib/Calgary-HTTP.html) do not exist anymore. 
 
-The lines may look like
+### Focus in 2022
+I found many logs at [https://www.sec.gov/dera/data/edgar-log-file-data-set.html](https://www.sec.gov/dera/data/edgar-log-file-data-set.html)
+Here I take the 2003 data, because the file is relatively small, about 3-4M. In 2017 the file size is about 300-400M.
 
-* local - - [24/Oct/1994:13:41:41 -0600] "GET index.html HTTP/1.0" 200 150
-* remote - - [27/Oct/1994:23:17:17 -0600] "GET index.html 200 3185
-* local - - [27/Oct/1994:15:28:10 -0600] "GET index.html Inch Nails HTTP/1.0" 404 -
+Now the project has a new focus. This Jupyter Notebok and production scripts for batch processing serve as investigation steps. The main goal is stream processing of logs with Spark Streams and scheduling with Apache Airflow. 
 
+### Why RDD und Spark Streams?
+For historical reasons I decided to keep the project focused on RDDs and Spark Streams. They are suitable for unstructured data. The processing described here will bring the structure to data.
 
-Out of 726739 log-lines, 723267 are parsed with protocol info, 1847 are parsed without protocol info, 1419 are of the "local index.html"-type and carry no useful information, and 206 lines are left unparsed till further decision.
+For initially structured data the better tools are DataFrames and StructuredStreams. For those I will find a new playground.
 
-##### The analysis includes:
-
-1. Step-by-step parsing of log lines to arrive at final "production" parsing code
-
-2. Exploratory data analysis and visualizations
-
-3. Analysis of "notFound" (404) response codes and visualizations
-
-The data are taken from [here](http://ita.ee.lbl.gov/html/contrib/Calgary-HTTP.html). The code assumes that the file "calgary_access_log.gz" is downloaded, gunziped and put into "data" subdirectory.
-
-
-##### Figures are [interactive online](https://rawgit.com/olalakul/Web-Server-Log-Analysis-PySpark/master/WebLogAnalysis.html)
-
-
-![Number of requests with various response codes over time (interactive in notebook)](images/requests_responseCodes.png)
-
-![Percentage of requests with various response codes over time](images/output_42_1.png?raw=True)
-
-![Counting requests with a certain size of returned content (interactive in notebook)](images/requests_sizeDocument.png?raw=True)
-
-![Countint requests with a certain percentage of notFound-code (interactive in notebook)](images/requests_percentageNotFound.png?raw=True)
-
-On the very left of this histogram there are 8751 requests that never (strictly speaking, no more than 1% of the times each was requested) returned "notFound" status. Everything looks good for those. On the very right of this histogram there are 2920 requests that very always (stricty speaking, more than 99% of the times each of those was requested) not found. Those definitely require further investigation.
