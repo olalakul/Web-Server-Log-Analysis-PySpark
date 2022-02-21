@@ -40,7 +40,7 @@ def dir_or_new_path(string):
     
     
 
-def access_fail_logs(parsed_logs):
+def access_fail_logs(parsed_logs, info_from_batch_processing=False):
     """ Read and parse log file, print a 20-sample of failed log-lines
     Inputs:
         parsed_logs (RDD): an RDD obtained via parseApacheLogLine(...)
@@ -50,17 +50,27 @@ def access_fail_logs(parsed_logs):
     access_logs = (parsed_logs
                    .filter(lambda s: s[1] == 1)
                    .map(lambda s: s[0])
-                   .cache())
+                  )
 
     failed_logs = (parsed_logs
                    .filter(lambda s: s[1] == 0)
-                   .map(lambda s: s[0]))
-    failed_logs_count = failed_logs.count()
-    if failed_logs_count > 0:
-        logger.info(f'Number of invalid logline: {failed_logs.count():d}')
-        for line in failed_logs.take(20):
-            logger.info(f'Invalid logline: {line:s}')
+                   .map(lambda s: s[0])
+                  )
+    
+    if info_from_batch_processing:
+        failed_logs_count = failed_logs.count()
+        if failed_logs_count > 0:
+           logger.info(f'Number of invalid logline: {failed_logs.count():d}')
+           for line in failed_logs.take(20):
+               logger.info(f'Invalid logline: {line:s}')
 
-    logger.info(f'Read {parsed_logs.count():d} lines, successfully parsed { access_logs.count():d} lines, \
-           failed to parse {failed_logs.count():d} lines')
+        logger.info(f'Read {parsed_logs.count():d} lines, successfully parsed { access_logs.count():d} lines, \
+                     failed to parse {failed_logs.count():d} lines')
+
+        if logger.isEnabledFor(logging.INFO):
+            print('Examples of the successfully parsed access logs ')
+            access_logs.pprint(4)
+            print('Examples of failed logs')
+            failed_logs.pprint(4)
+    
     return access_logs, failed_logs
